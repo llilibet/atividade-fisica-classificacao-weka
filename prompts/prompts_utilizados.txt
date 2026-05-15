@@ -1,93 +1,137 @@
-Você é responsável por gerar um dataset sintético realista para um problema de classificação em aprendizado de máquina.
+=========================================================
+ PROMPTS UTILIZADOS PARA GERAÇÃO DO DATASET SINTÉTICO
+ Tema: Classificação do Nível de Atividade Física
+ Disciplina: ITI370 – Inteligência Artificial | UFAM/ICET
+=========================================================
 
-## 🎯 Objetivo do Dataset
+─────────────────────────────────────────────────────────
+PROMPT 1 – Definição do domínio e atributos relevantes
+─────────────────────────────────────────────────────────
+"Preciso modelar um problema de classificação do nível de
+atividade física de indivíduos adultos. As classes serão:
+Sedentário, Moderadamente Ativo e Ativo.
+Quais atributos comportamentais e de rotina diária são mais
+relevantes para distinguir essas categorias? Liste ao menos
+8 atributos com nome, tipo (numérico ou categórico) e
+justificativa da relevância."
 
-O objetivo é classificar indivíduos em três níveis de atividade física:
+JUSTIFICATIVA: Este prompt estabelece o vocabulário do domínio
+e orienta a escolha de atributos semanticamente coerentes,
+evitando geração arbitrária. A resposta do modelo embasou a
+seleção dos 8 atributos principais do dataset.
 
-* Sedentário
-* Moderado
-* Ativo
+─────────────────────────────────────────────────────────
+PROMPT 2 – Definição dos intervalos típicos por classe
+─────────────────────────────────────────────────────────
+"Com base em estudos de saúde pública e diretrizes da OMS,
+quais são os intervalos típicos (média e desvio padrão) para
+cada atributo abaixo, segmentados pelas classes
+Sedentário / Moderadamente Ativo / Ativo?
 
-## 📊 Estrutura do Dataset
+Atributos: idade, horas_sono, passos_diarios, horas_sentado,
+freq_exercicio_semana, imc, horas_tela, consumo_agua_litros.
 
-Gere um dataset com no mínimo 500 instâncias e os seguintes atributos:
+Responda em formato de tabela."
 
-1. idade (inteiro entre 18 e 70)
-2. tempo_exercicio_semanal (horas por semana, número decimal entre 0 e 15)
-3. passos_por_dia (inteiro entre 1000 e 20000)
-4. tempo_sentado (horas por dia, número decimal entre 2 e 14)
-5. frequencia_exercicio (dias por semana, inteiro entre 0 e 7)
-6. tipo_atividade (nenhuma, leve, moderada, intensa)
-7. qualidade_sono (ruim, media, boa)
-8. uso_tela (horas por dia, número decimal entre 1 e 12)
-9. ocupacao (sedentaria, ativa)
-10. cor_favorita (vermelho, azul, verde, amarelo, roxo)  ← atributo irrelevante
+JUSTIFICATIVA: Este prompt parametrizou as distribuições
+gaussianas usadas para gerar cada classe. Os intervalos
+obtidos foram validados contra diretrizes da OMS (150–300 min
+de atividade moderada/semana) e do CDC (mínimo 8.000 passos/dia
+para saúde cardiovascular).
 
-## 🏷️ Classe (target)
+─────────────────────────────────────────────────────────
+PROMPT 3 – Escolha do atributo irrelevante
+─────────────────────────────────────────────────────────
+"Para um dataset de classificação de atividade física, sugira
+um atributo que seja completamente irrelevante para a tarefa,
+mas plausível de estar presente em um cadastro de saúde.
+Justifique por que ele não deve influenciar a classe."
 
-nivel_atividade:
+JUSTIFICATIVA: O modelo sugeriu 'cor da roupa favorita' (e
+equivalentes), confirmando que a correlação com atividade
+física é inexistente. O atributo cor_roupa_favorita foi
+incorporado propositalmente para testar a capacidade dos
+algoritmos de seleção de atributos (ex: InfoGain no Weka)
+em eliminar variáveis irrelevantes.
 
-* Sedentario
-* Moderado
-* Ativo
+─────────────────────────────────────────────────────────
+PROMPT 4 – Caracterização dos outliers
+─────────────────────────────────────────────────────────
+"No contexto de atividade física, descreva perfis de
+indivíduos que configurariam outliers em um dataset:
+(a) outliers por distância da distribuição principal (valores
+    extremos em atributos numéricos), e
+(b) outliers por comportamento discrepante (contradição entre
+    atributos e classe esperada).
+Dê pelo menos 2 exemplos de cada tipo com valores numéricos
+plausíveis."
 
-## 🧠 Regras Semânticas (IMPORTANTE)
+JUSTIFICATIVA: Este prompt gerou os 10 outliers inseridos
+intencionalmente no dataset. A distinção entre os dois tipos
+de outlier segue a taxonomia discutida em aula e permite
+avaliar como os algoritmos respondem a cada categoria.
 
-Os dados NÃO devem ser aleatórios. Devem seguir relações realistas:
+─────────────────────────────────────────────────────────
+PROMPT 5 – Estratégia de inserção de ruído e valores faltantes
+─────────────────────────────────────────────────────────
+"Em um dataset de saúde sobre atividade física, qual é a forma
+mais realista de inserir:
+(a) ruído: pequenas perturbações em atributos numéricos que
+    não alteram a classe, mas dificultam o aprendizado;
+(b) valores faltantes: quais atributos são mais propensos a
+    não serem respondidos em questionários de saúde e por quê?
 
-* Pessoas sedentárias:
+Sugira percentuais adequados para manter o dataset utilizável."
 
-  * baixo tempo_exercicio_semanal
-  * baixa frequencia_exercicio
-  * alto tempo_sentado
-  * alto uso_tela
+JUSTIFICATIVA: O modelo indicou que atributos como IMC,
+consumo de água e frequência de exercício são os mais
+propensos a ausência em questionários autodeclarados (~4-5%).
+O ruído foi inserido em passos_diarios e horas_tela, que têm
+maior variabilidade de medição. Esses critérios embasaram a
+implementação Python do script de geração.
 
-* Pessoas ativas:
+─────────────────────────────────────────────────────────
+VERSÕES ITERATIVAS DOS PROMPTS
+─────────────────────────────────────────────────────────
+Versão inicial (Prompt 2, 1ª iteração):
+  "Quais são os valores normais de passos diários e IMC
+   por faixa de atividade?"
+  → Resultado: muito genérico, sem distinção de desvio padrão.
 
-  * alto tempo_exercicio_semanal
-  * alta frequencia_exercicio
-  * muitos passos_por_dia
-  * menor tempo_sentado
+Versão refinada (Prompt 2, 2ª iteração – utilizada):
+  Incluiu todos os 8 atributos e solicitou média E desvio
+  padrão, permitindo parametrizar distribuições normais no
+  script Python.
 
-* Pessoas moderadas:
+  Impacto: a separação estatística entre classes melhorou
+  significativamente após incorporar os desvios-padrão
+  fornecidos pelo modelo.
 
-  * valores intermediários entre os dois grupos
+Versão inicial (Prompt 4, 1ª iteração):
+  "Me dê exemplos de outliers em dados de saúde."
+  → Resultado: exemplos muito genéricos, sem valores numéricos.
 
-## ⚠️ Requisitos Obrigatórios
+Versão refinada (Prompt 4, 2ª iteração – utilizada):
+  Restringiu o domínio ao problema específico e exigiu
+  valores numéricos concretos para cada atributo.
 
-1. Inserir valores faltantes (missing values) em pelo menos 5% dos dados, distribuídos em diferentes atributos.
+  Impacto: os outliers gerados são semanticamente ricos e
+  testam hipóteses específicas (ex: atleta com IMC muito
+  baixo; sedentário com horas_sentado extremamente altas).
 
-2. Inserir ruído:
-
-   * alguns registros devem quebrar as regras acima
-   * exemplo: pessoa com muitos passos classificada como sedentária
-
-3. Inserir outliers:
-
-   * exemplos:
-
-     * passos_por_dia acima de 30000
-     * tempo_exercicio_semanal acima de 20
-     * tempo_sentado muito baixo ou muito alto
-
-4. Garantir diversidade nos dados:
-
-   * diferentes combinações de atributos
-   * não gerar padrões repetitivos
-
-## 📄 Formato de Saída
-
-* Gere o dataset no formato CSV
-* Inclua cabeçalho com nomes dos atributos
-* Use valores separados por vírgula
-* Use "?" para valores faltantes
-
-## 🚫 Restrições
-
-* NÃO gerar dados completamente aleatórios
-* NÃO ignorar as relações entre atributos
-* NÃO gerar dataset pequeno (mínimo 500 linhas)
-
-## ✅ Objetivo Final
-
-O dataset deve parecer realista e adequado para análise em ferramentas de aprendizado de máquina como Weka.
+=========================================================
+ RESUMO: ATRIBUTOS DO DATASET
+=========================================================
+| Atributo                | Tipo     | Relevância   |
+|-------------------------|----------|--------------|
+| idade                   | INTEGER  | Relevante    |
+| horas_sono              | REAL     | Relevante    |
+| passos_diarios          | INTEGER  | Relevante    |
+| horas_sentado           | REAL     | Relevante    |
+| freq_exercicio_semana   | INTEGER  | Relevante    |
+| imc                     | REAL     | Relevante    |
+| horas_tela              | REAL     | Relevante    |
+| consumo_agua_litros     | REAL     | Relevante    |
+| cor_roupa_favorita      | NOMINAL  | IRRELEVANTE  |
+| nivel_atividade (classe)| NOMINAL  | —            |
+=========================================================

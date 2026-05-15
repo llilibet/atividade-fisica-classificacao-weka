@@ -166,3 +166,14 @@ Além disso, busca:
 - avaliar métricas de desempenho;
 - interpretar os resultados obtidos;
 - compreender o comportamento dos modelos diante de dados realistas.
+
+# 10. Referências
+- [1] GONÇALVES, I. B. et al. O impacto do sedentarismo na saúde pública do Brasil: desafios e estratégias de intervenção. In: I CONGRESSO NACIONAL SOBRE O SUS ON-LINE: DESAFIOS E PERSPECTIVAS. Anais... IME Events, [s.d.].
+
+- [2] MAHENDRA, D. R. P. et al. A Machine Learning Approach to Predicting Physical Activity Levels in Adolescents. Indonesian Journal of Sport Management, v. 3, n. 2, p. 261-272, 2023. DOI: https://doi.org/10.31949/ijsm.v3i1.7145.
+
+- [3] THE COPENHAGEN INSTITUTE FOR FUTURES STUDIES. The next era in global health. Editado por Klaus Æ. Mogensen. Copenhague: Copenhagen Institute for Futures Studies / Novo Nordisk Business Innovation Garage, [s.d.].
+
+- [4] ESTRELLA, T. et al. Machine Learning for the Analysis of Healthy Lifestyle Data: Scoping Review and Guidelines. JMIR Human Factors, v. 13, e78648, 2026. DOI: 10.2196/78648.
+
+- [5] MAHENDRA, D. R. P. et al. A Machine Learning Approach to Predicting Physical Activity Levels in Adolescents. Indonesian Journal of Sport Management, v. 3, n. 2, p. 261-272, 2023. DOI: https://doi.org/10.31949/ijsm.v3i1.7145.
