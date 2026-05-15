@@ -1,0 +1,93 @@
+Você é responsável por gerar um dataset sintético realista para um problema de classificação em aprendizado de máquina.
+
+## 🎯 Objetivo do Dataset
+
+O objetivo é classificar indivíduos em três níveis de atividade física:
+
+* Sedentário
+* Moderado
+* Ativo
+
+## 📊 Estrutura do Dataset
+
+Gere um dataset com no mínimo 500 instâncias e os seguintes atributos:
+
+1. idade (inteiro entre 18 e 70)
+2. tempo_exercicio_semanal (horas por semana, número decimal entre 0 e 15)
+3. passos_por_dia (inteiro entre 1000 e 20000)
+4. tempo_sentado (horas por dia, número decimal entre 2 e 14)
+5. frequencia_exercicio (dias por semana, inteiro entre 0 e 7)
+6. tipo_atividade (nenhuma, leve, moderada, intensa)
+7. qualidade_sono (ruim, media, boa)
+8. uso_tela (horas por dia, número decimal entre 1 e 12)
+9. ocupacao (sedentaria, ativa)
+10. cor_favorita (vermelho, azul, verde, amarelo, roxo)  ← atributo irrelevante
+
+## 🏷️ Classe (target)
+
+nivel_atividade:
+
+* Sedentario
+* Moderado
+* Ativo
+
+## 🧠 Regras Semânticas (IMPORTANTE)
+
+Os dados NÃO devem ser aleatórios. Devem seguir relações realistas:
+
+* Pessoas sedentárias:
+
+  * baixo tempo_exercicio_semanal
+  * baixa frequencia_exercicio
+  * alto tempo_sentado
+  * alto uso_tela
+
+* Pessoas ativas:
+
+  * alto tempo_exercicio_semanal
+  * alta frequencia_exercicio
+  * muitos passos_por_dia
+  * menor tempo_sentado
+
+* Pessoas moderadas:
+
+  * valores intermediários entre os dois grupos
+
+## ⚠️ Requisitos Obrigatórios
+
+1. Inserir valores faltantes (missing values) em pelo menos 5% dos dados, distribuídos em diferentes atributos.
+
+2. Inserir ruído:
+
+   * alguns registros devem quebrar as regras acima
+   * exemplo: pessoa com muitos passos classificada como sedentária
+
+3. Inserir outliers:
+
+   * exemplos:
+
+     * passos_por_dia acima de 30000
+     * tempo_exercicio_semanal acima de 20
+     * tempo_sentado muito baixo ou muito alto
+
+4. Garantir diversidade nos dados:
+
+   * diferentes combinações de atributos
+   * não gerar padrões repetitivos
+
+## 📄 Formato de Saída
+
+* Gere o dataset no formato CSV
+* Inclua cabeçalho com nomes dos atributos
+* Use valores separados por vírgula
+* Use "?" para valores faltantes
+
+## 🚫 Restrições
+
+* NÃO gerar dados completamente aleatórios
+* NÃO ignorar as relações entre atributos
+* NÃO gerar dataset pequeno (mínimo 500 linhas)
+
+## ✅ Objetivo Final
+
+O dataset deve parecer realista e adequado para análise em ferramentas de aprendizado de máquina como Weka.
